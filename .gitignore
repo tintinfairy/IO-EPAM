@@ -1,0 +1,11 @@
+out/
+target/
+tmp/
+.idea/
+IO-EPAM.iml
+input.txt
+output1.txt
+output2.txt
+correct_output.txt
+pom.xml
+serialization.txt
