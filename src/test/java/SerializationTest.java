@@ -11,7 +11,6 @@ import static org.junit.Assert.*;
 
 public class SerializationTest {
     private ArrayList<Film> films = new ArrayList<>();
-    Serialization ser = new Serialization();
 
     @Before
     public void makeArrayList() {
@@ -26,22 +25,22 @@ public class SerializationTest {
 
     @Test
     public void filmsAmountChecker() {
-        ArrayList<Film> list = ser.readFile("serialization.txt");
+        ArrayList<Film> list = Serialization.readFile("serialization.txt");
         assertEquals(2, list.size());
     }
 
     @Test
     public void editActor() {
-        ArrayList<Film> list = ser.readFile("serialization.txt");
-        ser.editActorName(films,"Green Book", "Viggo Mortensen", "Linda Cardellini");
-        ser.writeFilmInFile(list, "serialization.txt");
-        assertEquals("Linda Cardellini", ser.readFile("serialization.txt").get(0).getActorName("Linda Cardellini"));
+        ArrayList<Film> list = Serialization.readFile("serialization.txt");
+        Serialization.editActorName(films,"Green Book", "Viggo Mortensen", "Linda Cardellini");
+        Serialization.writeFilmInFile(list, "serialization.txt");
+        assertEquals("Linda Cardellini", Serialization.readFile("serialization.txt").get(0).getActorName("Linda Cardellini"));
     }
     @Test
     public void editFilm() {
-        ArrayList<Film> list = ser.readFile("serialization.txt");
-        ser.editFilmName(list, "Everybody Knows", "Nobody knows");
-        ser.writeFilmInFile(list, "serialization.txt");
-        assertEquals("Nobody knows", ser.readFile("serialization.txt").get(1).getFilmName());
+        ArrayList<Film> list = Serialization.readFile("serialization.txt");
+        Serialization.editFilmName(list, "Everybody Knows", "Nobody knows");
+        Serialization.writeFilmInFile(list, "serialization.txt");
+        assertEquals("Nobody knows", Serialization.readFile("serialization.txt").get(1).getFilmName());
     }
 }

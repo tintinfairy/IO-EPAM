@@ -5,7 +5,7 @@ import java.io.*;
 
 public class Serialization {
 
-    public ArrayList<Film> readFile(String fileName) {
+    public static ArrayList<Film> readFile(String fileName) {
 
         ArrayList<Film> filmCollection = new ArrayList<>();
 
