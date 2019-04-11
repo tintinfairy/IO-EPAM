@@ -32,15 +32,13 @@ public class StreamsHandlerTest {
 
     @Test
     public void testingBinaryHandlerAmountOfKeyWords() {
-        BinaryStreamsHandler handler = new BinaryStreamsHandler("input.txt", "tmp/output.txt");
-        handler.keywordWriter();
+        BinaryStreamsHandler.keywordWriter("input.txt", "tmp/output.txt");
         checkFiles();
     }
 
     @Test
     public void testingTextHandlerAmountOfKeyWords() {
-        TextStreamHandler handler = new TextStreamHandler("input.txt", "tmp/output.txt");
-        handler.keywordWriter();
+        TextStreamHandler.keywordWriter("input.txt", "tmp/output.txt");
         checkFiles();
     }
 
@@ -68,7 +66,7 @@ public class StreamsHandlerTest {
             for (int i = 0; i < RIGHT_KEYWORDS.length; i++) {
                 allKeywordsExists &= rightKeywordsMask[i];
             }
-            Assert.assertTrue("Ве ключевые слова должны присуствовать", allKeywordsExists);
+            Assert.assertTrue("Все ключевые слова должны присуствовать", allKeywordsExists);
         } catch (IOException e) {
             Assert.fail("IOException");
         }

@@ -2,12 +2,13 @@ package main.java;
 
 import java.util.ArrayList;
 import java.io.*;
+import java.util.List;
 
 public class Serialization {
 
-    public static ArrayList<Film> readFile(String fileName) {
+    public static List<Film> readFile(String fileName) {
 
-        ArrayList<Film> filmCollection = new ArrayList<>();
+        List<Film> filmCollection = new ArrayList<>();
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
             filmCollection = (ArrayList<Film>) ois.readObject();
@@ -19,7 +20,7 @@ public class Serialization {
         return filmCollection;
     }
 
-    public static void writeFilmInFile(ArrayList<Film> films, String fileName) {
+    public static void writeFilmInFile(List<Film> films, String fileName) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
             oos.writeObject(films);
         } catch (IOException e) {
@@ -27,7 +28,7 @@ public class Serialization {
         }
     }
 
-    public static void editFilmName(ArrayList<Film> films, String filmToEdit, String editedFilm) {
+    public static void editFilmName(List<Film> films, String filmToEdit, String editedFilm) {
         for (Film film : films) {
             if (film.getFilmName().equals(filmToEdit)) {
                 film.setFilmName(editedFilm);
@@ -35,7 +36,7 @@ public class Serialization {
         }
     }
 
-    public static void editActorName(ArrayList<Film> films, String filmToEdit, String actorToEdit, String editedActor) {
+    public static void editActorName(List<Film> films, String filmToEdit, String actorToEdit, String editedActor) {
         int filmId;
         for (Film film : films) {
             if (film.getFilmName().equals(filmToEdit)) {

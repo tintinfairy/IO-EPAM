@@ -1,51 +1,60 @@
 package main.java;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.*;
 
 public class BinaryStreamsHandler {
 
-    private String nameOfInputFile;
-    private String nameOfOutputFile;
 
-    public BinaryStreamsHandler(String nameOfInputFile, String nameOfOutputFile) {
-        this.nameOfInputFile = nameOfInputFile;
-        this.nameOfOutputFile = nameOfOutputFile;
-    }
-
-    public void keywordWriter() {
-        try {
-            BufferedInputStream inFile = new BufferedInputStream(new FileInputStream(nameOfInputFile));
-            BufferedOutputStream outFile = new BufferedOutputStream(new FileOutputStream(nameOfOutputFile));
+    public static String dataReader(String nameOfInputFile) {
+        String stringFromInput = "";
+        try (BufferedInputStream inFile = new BufferedInputStream(new FileInputStream(nameOfInputFile))) {
             int size = inFile.available();
             byte[] buffer = new byte[size];
             inFile.read(buffer);
-            String stringFromInput = new String(buffer);
-            inFile.close();
+            stringFromInput = new String(buffer);
 
-            Matcher match = keywordPattern().matcher(stringFromInput);
-            int count = 0;
-            String stringFromOutput = "";
-
-            while (match.find()) {
-                count++;
-                stringFromOutput = stringFromInput.substring(match.start(), match.end());
-                outFile.write(String.format("%d: %s\n", count, stringFromOutput).getBytes());
-                //outFile.write(System.getProperty("line.separator").getBytes());
-
-            }
-            stringFromOutput = "Количество ключевых слов: " + count;
-            outFile.write(stringFromOutput.getBytes());
-
-            outFile.close();
-
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        return stringFromInput;
     }
 
-    private Pattern keywordPattern() {
+
+    public static List<String> dataAnalizer(String stringFromInput) {
+        List<String> outputData = new ArrayList<>();
+        Matcher match = keywordPattern().matcher(stringFromInput);
+        int i = 0;
+        while (match.find()) {
+            outputData.add(i, stringFromInput.substring(match.start(), match.end()));
+            i++;
+        }
+        return outputData;
+    }
+
+    public static void dataWriter(String nameOfOutputFile, List<String> analizedData) {
+        try (BufferedOutputStream outFile = new BufferedOutputStream(new FileOutputStream(nameOfOutputFile))) {
+            for (int i = 0; i < analizedData.size(); i++) {
+                outFile.write(String.format("%d: %s\n", i, analizedData.get(i)).getBytes());
+            }
+            String stringFromOutput = "Количество ключевых слов: " + analizedData.size();
+            outFile.write(stringFromOutput.getBytes());
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+        public static void keywordWriter (String nameOfInputFile, String nameOfOutputFile){
+                dataWriter(nameOfOutputFile,dataAnalizer(dataReader(nameOfInputFile)));
+        }
+
+    private static Pattern keywordPattern() {
         return Pattern.compile("abstract|continue|for|new|switch|" +
                 "assert|default|goto|package|synchronized|" +
                 "boolean|do|if|private|this|" +
